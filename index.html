@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <a href=http://www.bsa.in>http://www.bsa.in</a><br>
+    <a href=http://www.bsaladybird.in>http://www.bsaladybird.in</a><br>
+    <a href=http://www.bundook.in>http://www.bundook.in</a><br>
+    <a href=http://www.cacl.in>http://www.cacl.in</a><br>
+    <a href=http://www.camshot.in>http://www.camshot.in</a><br>
+    <a href=http://www.ceramix.in>http://www.ceramix.in</a><br>
+    <a href=http://www.designdimensions.in>http://www.designdimensions.in</a><br>
+    <a href=http://www.developed.in>http://www.developed.in</a><br>
+    <a href=http://www.easymovies.in>http://www.easymovies.in</a><br>
+    <a href=http://www.edu.in>http://www.edu.in</a><br>
+    <a href=http://www.hellohealyh.in>http://www.hellohealth.in</a><br>
+    <a href=http://www.airindia.in>http://www.airindia.in</a><br>
+
+
+
+
+
+
+    <title>Link Manager</title>
+    <script>
+        async function addLink() {
+            const url = document.getElementById('url').value;
+            const response = await fetch('/add_link', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ url })
+            });
+            const result = await response.json();
+            alert(result.message);
+            loadLinks();
+        }
+
+        async function loadLinks() {
+            const response = await fetch('/get_links');
+            const links = await response.json();
+            const linkList = document.getElementById('linkList');
+            linkList.innerHTML = '';
+            links.forEach(link => {
+                const a = document.createElement('a');
+                a.href = link;
+                a.textContent = link;
+                a.target = '_blank';
+                const li = document.createElement('li');
+                li.appendChild(a);
+                linkList.appendChild(li);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', loadLinks);
+    </script>
+</head>
+<body>
+   <!-- <h1>Link Manager</h1>
+    <input type="text" id="url" placeholder="Enter URL">
+    <button onclick="addLink()">Add Link</button>
+    <ul id="linkList"></ul> -->
+</body>
+</html>
